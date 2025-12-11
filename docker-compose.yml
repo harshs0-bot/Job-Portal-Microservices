@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+
+  eureka-server:
+    image: eureka-service
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+
+  user-server:
+    image: user-service
+    build: ./user-server
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+
+  order-server:
+    image: order-service
+    build: ./order-server
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+
+  gateway-server:
+    image: gateway-service
+    build: ./gateway-server
+    ports:
+      - "9000:9000"
+    depends_on:
+      - eureka-server
